@@ -6,6 +6,10 @@ from typing import List, Dict, Optional
 from chatbot import ChatbotMunicipal
 from pydantic import BaseModel
 
+
+from fastapi.middleware.cors import CORSMiddleware  # ← NUEVA LÍNEA
+
+
 # Inicializar chatbot
 chatbot = ChatbotMunicipal()
 
@@ -20,6 +24,14 @@ app = FastAPI(
     title="Sistema de Gestion Municipal con IA",
     description="API para automatizar tramites municipales - Puebla",
     version="0.2.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Frontend React
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Base de datos simulada de trámites
