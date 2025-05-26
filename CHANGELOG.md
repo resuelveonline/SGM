@@ -13,6 +13,38 @@ y este proyecto adhiere al [Versionado Semántico](https://semver.org/lang/es/).
 - Portal de trámites en línea con seguimiento automatizado
 - Dashboard para funcionarios municipales
 
+## [0.3.0] - 2025-05-25
+### 🤖 CHATBOT CON IA FUNCIONANDO
+- **Chatbot inteligente**: Procesamiento de lenguaje natural en español
+- **Reconocimiento de intenciones**: 8 categorías de consultas ciudadanas
+- **Respuestas contextuales**: Información específica de trámites poblanos
+- **Sugerencias automáticas**: Guía al ciudadano en próximos pasos
+
+### Endpoint de Chat
+- `POST /chat` - Conversación con ciudadanos
+- **Input**: `{"mensaje": "¿Cómo saco licencia?"}`
+- **Output**: Respuesta + intención + sugerencias
+
+### Inteligencia Artificial
+- Normalización de texto (sin acentos, minúsculas)
+- Detección por palabras clave con puntuación
+- 8 intenciones: saludo, licencia, uso_suelo, expediente, horarios, ubicación, costo, requisitos
+- Respuestas predefinidas contextualmente relevantes
+
+### Funcionalidades del Chatbot
+- Entiende español coloquial mexicano
+- Maneja múltiples formas de preguntar lo mismo
+- Proporciona información específica de Puebla
+- Sugiere próximos pasos en la conversación
+
+### Técnico
+- Librería `unidecode` para normalización de texto
+- Sistema de puntuación para detección de intenciones
+- Modelo Pydantic para validación de mensajes
+- Respuestas estructuradas con timestamp
+
+
+
 ## [0.2.0] - 2025-05-25
 ### 🚀 SISTEMA MUNICIPAL COMPLETO
 - **7 endpoints funcionando**: Trámites, consultas, horarios, dependencias
