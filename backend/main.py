@@ -3,6 +3,19 @@ from fastapi import FastAPI, HTTPException
 from datetime import datetime
 from typing import List, Dict, Optional
 
+from chatbot import ChatbotMunicipal
+from pydantic import BaseModel
+
+# Inicializar chatbot
+chatbot = ChatbotMunicipal()
+
+# Modelo para el endpoint de chat
+class MensajeChat(BaseModel):
+    mensaje: str
+    usuario_id: Optional[str] = None
+
+
+
 app = FastAPI(
     title="Sistema de Gestion Municipal con IA",
     description="API para automatizar tramites municipales - Puebla",
@@ -188,4 +201,21 @@ async def listar_dependencias():
                 "servicios": ["Actas de nacimiento", "Matrimonios", "Defunciones"]
             }
         ]
+    }
+
+@app.post("/chat")
+async def chat_ciudadano(mensaje_data: MensajeChat):
+    """Chatbot para atención ciudadana automatizada"""
+    if not mensaje_data.mensaje.strip():
+        raise HTTPException(status_code=400, detail="Mensaje no puede estar vacío")
+    
+    respuesta = chatbot.generar_respuesta(mensaje_data.mensaje)
+    
+    return {
+        "timestamp": datetime.now().isoformat(),
+        "usuario_id": mensaje_data.usuario_id,
+        "chatbot_respuesta": respuesta["respuesta"],
+        "intencion": respuesta["intencion_detectada"],
+        "sugerencias": respuesta["sugerencias"],
+        "mensaje_ciudadano": mensaje_data.mensaje
     }
